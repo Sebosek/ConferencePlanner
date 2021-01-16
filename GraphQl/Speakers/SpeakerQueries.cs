@@ -21,12 +21,12 @@ namespace ConferencePlanner.GraphQl.Speakers
         public Task<List<Speaker>> GetSpeakersAsync([ScopedService] ApplicationDbContext context) =>
             context.Speakers.ToListAsync();
 
-        public Task<Speaker> GetSpeakerAsync(
+        public Task<Speaker> GetSpeakerByIdAsync(
             [ID(nameof(Speaker))] int id, 
             SpeakerByIdDataLoader dataLoader,
             CancellationToken cancellationToken) => dataLoader.LoadAsync(id, cancellationToken);
         
-        public async Task<IReadOnlyCollection<Speaker>> GetSpeakersAsync(
+        public async Task<IReadOnlyCollection<Speaker>> GetSpeakersByIdAsync(
             [ID(nameof(Speaker))] int[] ids, 
             SpeakerByIdDataLoader dataLoader,
             CancellationToken cancellationToken) => 

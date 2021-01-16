@@ -15,7 +15,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ConferencePlanner.GraphQl.Tracks
 {
-    [ExtendObjectType(Name = "Query")]
+    [ExtendObjectType(Name = Consts.QUERY)]
     public class TrackQueries
     {
         [UseApplicationDbContext]
@@ -46,7 +46,7 @@ namespace ConferencePlanner.GraphQl.Tracks
             TrackByIdDataLoader trackById,
             CancellationToken cancellationToken) => trackById.LoadAsync(id, cancellationToken);
 
-        public async Task<IReadOnlyCollection<Track>> GetTracksByIdsAsync(
+        public async Task<IReadOnlyCollection<Track>> GetTrackByIdsAsync(
             [ID(nameof(Track))] int[] ids,
             TrackByIdDataLoader trackById,
             CancellationToken cancellationToken) =>

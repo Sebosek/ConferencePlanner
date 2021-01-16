@@ -19,7 +19,8 @@ namespace ConferencePlanner.GraphQl.Types
     {
         protected override void Configure(IObjectTypeDescriptor<Speaker> descriptor)
         {
-            descriptor.ImplementsNode()
+            descriptor
+                .ImplementsNode()
                 .IdField(p => p.Id)
                 .ResolveNode(WithDataLoader);
             
@@ -48,7 +49,7 @@ namespace ConferencePlanner.GraphQl.Types
                     .ToListAsync(cancellationToken)
                     .ConfigureAwait(false);
 
-                return await sessionById.LoadAsync(ids, cancellationToken);
+                return await sessionById.LoadAsync(ids, cancellationToken).ConfigureAwait(false);
             }
         }
     }
