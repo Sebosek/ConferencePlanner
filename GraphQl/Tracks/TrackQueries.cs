@@ -19,10 +19,10 @@ namespace ConferencePlanner.GraphQl.Tracks
     public class TrackQueries
     {
         [UseApplicationDbContext]
-        public async Task<IEnumerable<Track>> GetTracksAsync(
-            [ScopedService] ApplicationDbContext context,
-            CancellationToken cancellationToken) =>
-            await context.Tracks.ToListAsync(cancellationToken).ConfigureAwait(false);
+        [UsePaging]
+        public IQueryable<Track> GetTracks(
+            [ScopedService] ApplicationDbContext context) =>
+            context.Tracks.OrderBy(o => o.Name);
 
         [UseApplicationDbContext]
         public Task<Track> GetTrackByNameAsync(

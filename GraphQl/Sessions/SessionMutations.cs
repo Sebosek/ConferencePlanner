@@ -35,6 +35,10 @@ namespace ConferencePlanner.GraphQl.Sessions
             }
 
             var session = mapper.Map<Session>(input);
+            foreach (var id in input.SpeakerIds)
+            {
+                session.SessionSpeakers.Add(new SessionSpeaker {SpeakerId = id});
+            }
 
             await context.Sessions.AddAsync(session, cancellationToken).ConfigureAwait(false);
             await context.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
@@ -43,7 +47,7 @@ namespace ConferencePlanner.GraphQl.Sessions
         }
 
         [UseApplicationDbContext]
-        public async Task<ScheduleSessionPayload> ScheduleSessionPayload(
+        public async Task<ScheduleSessionPayload> ScheduleSessionAsync(
             ScheduleSessionInput input,
             [ScopedService] ApplicationDbContext context,
             CancellationToken cancellationToken)

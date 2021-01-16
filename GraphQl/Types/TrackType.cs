@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ConferencePlanner.GraphQl.Data;
 using ConferencePlanner.GraphQl.DataLoaders;
+using ConferencePlanner.GraphQl.Extensions;
 using HotChocolate;
 using HotChocolate.Resolvers;
 using HotChocolate.Types;
@@ -20,10 +21,15 @@ namespace ConferencePlanner.GraphQl.Types
                 .IdField(t => t.Id)
                 .ResolveNode((ctx, id) =>
                     ctx.DataLoader<TrackByIdDataLoader>().LoadAsync(id, ctx.RequestAborted));
-                     
+
+            descriptor
+                .Field(p => p.Name)
+                .UseUpperCase();
+            
             descriptor
                 .Field(t => t.Sessions)
                 .ResolveWith<TrackResolvers>(t => t.GetSessionsAsync(default!, default!, default!, default))
+                .UsePaging<NonNullType<SessionType>>()
                 .Name("sessions");
         }
 

@@ -18,7 +18,7 @@ namespace ConferencePlanner.GraphQl
 {
     public class Startup
     {
-        private const string CONNECTION_STRING = "Data source=conferences.db";
+        private const string CONNECTION_STRING = "Data source=./conferences.db";
         
         public void ConfigureServices(IServiceCollection services)
         {
@@ -40,6 +40,8 @@ namespace ConferencePlanner.GraphQl
                 .AddType<SpeakerType>()
                 .AddType<TrackType>()
                 .EnableRelaySupport()
+                .AddFiltering()
+                .AddSorting()
                 .AddDataLoader<SpeakerByIdDataLoader>()
                 .AddDataLoader<SessionByIdDataLoader>();
         }
